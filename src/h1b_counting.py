@@ -92,23 +92,23 @@ state_pairs = sorted(dict_worksite_state.items(),
 
 with open(fname_occupations, 'w') as ofile_occupations:
     ofile_occupations.write(
-        'TOP_OCCUPATIONS;NUMBER_CERTIFIED_APPLICATIONS;PERCENTAGE')
+        'TOP_OCCUPATIONS;NUMBER_CERTIFIED_APPLICATIONS;PERCENTAGE\n')
     n_top = 0
     for occupation, number in occupation_pairs:
         if n_top < 10:
             n_top += 1
             print('{0};{1};{2:.1f}'.format(
                 occupation, number, 100 * number / total_certified))
-            ofile_occupations.write('{0};{1};{2:.1f}'.format(
+            ofile_occupations.write('{0};{1};{2:.1f}\n'.format(
                 occupation, number, 100 * number / total_certified))
 
 with open(fname_states, 'w') as ofile_states:
-    ofile_states.write('TOP_STATES;NUMBER_CERTIFIED_APPLICATIONS;PERCENTAGE')
+    ofile_states.write('TOP_STATES;NUMBER_CERTIFIED_APPLICATIONS;PERCENTAGE\n')
     n_top = 0
     for state, number in state_pairs:
         if n_top < 10:
             n_top += 1
             print('{0};{1};{2:.1f}'.format(
                 state, number, 100 * number / total_certified))
-            ofile_states.write('{0};{1};{2:.1f}'.format(
+            ofile_states.write('{0};{1};{2:.1f}\n'.format(
                 state, number, 100 * number / total_certified))
