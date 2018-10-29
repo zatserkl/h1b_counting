@@ -1,9 +1,9 @@
-from collections import defaultdict, Counter
+from collections import defaultdict
 import sys
 
 
 def input_line(fname_input):
-    """Yields line-by-line to avoid read the whole file into memory.
+    """Yields line-by-line to avoid read the whole file into the memory.
     Input:  input filename
     Output: list of fields
     """
@@ -22,19 +22,19 @@ if len(sys.argv) >= 4:
     fname_occupations = sys.argv[2]
     fname_states = sys.argv[3]
 
-print('fname_input:', fname_input,
-      'fname_occupations:', fname_occupations,
-      'fname_states:', fname_states)
+# print('fname_input:', fname_input,
+#       'fname_occupations:', fname_occupations,
+#       'fname_states:', fname_states)
 
 try:
-    lines_gen = input_line(fname_input)  # create a line generator
+    lines_gen = input_line(fname_input)  # creates a line generator
 except FileNotFoundError as e:
     print(e)
     exit()
 
 header = next(lines_gen)
 
-# set the name for the line number
+# set the name for the line number for convenience
 header[0] = 'LINE'
 
 # create a dictionary: index of list element vs field name
@@ -42,7 +42,7 @@ index_field = {}
 for ind, field in enumerate(header):
     index_field[field] = ind
 
-print(index_field)  # can be different for different years
+# print(index_field)  # can be different for different years
 
 # string constants: fields of interest
 case_status_key = 'CASE_STATUS'
@@ -65,6 +65,7 @@ for line in lines_gen:
     case_status = line[index_field[case_status_key]]
     occupation = line[index_field[occupation_key]].replace('"', '')
     worksite_state = line[index_field[worksite_state_key]]
+
     # print(case_status_key, case_status)
     # print(occupation_key, occupation)
     # print(worksite_state_key, worksite_state)
@@ -79,20 +80,27 @@ for line in lines_gen:
 # total certified applications
 total_certified = sum(dict_occupation.values())
 
-# what if the 10th place has more than 1 candidates?
-# occupation_pairs = sorted(dict_occupation.items(),
-#                           key=lambda x: x[1], reverse=True)
+# sort by the name first
 occupation_pairs = sorted(dict_occupation.items(),
-                          key=lambda x: (-x[1], x[0]))
-### occupation_pairs.sort(key=lambda x: x[0])
+                          key=lambda x: x[0])
+# then sort by the number: the name sorting is stable
+occupation_pairs.sort(key=lambda x: x[1], reverse=True)
 
-print('occupation_pairs:\n', occupation_pairs)
+# Sort in one pass. The minus sign produce reverse order.
+# occupation_pairs = sorted(dict_occupation.items(),
+#                           key=lambda x: (-x[1], x[0]))
 
-# state_pairs = sorted(dict_worksite_state.items(),
-#                      key=lambda x: x[1], reverse=True)
+# print('occupation_pairs:\n', occupation_pairs)
+
+# sort by the name first
 state_pairs = sorted(dict_worksite_state.items(),
-                     key=lambda x: (-x[1], x[0]))
-### state_pairs.sort(key=lambda x: x[0])
+                     key=lambda x: x[0])
+# then sort by the number: the name sorting is stable
+state_pairs.sort(key=lambda x: x[1], reverse=True)
+
+# Sort in one pass. The minus sign produce reverse order.
+# state_pairs = sorted(dict_worksite_state.items(),
+#                      key=lambda x: (-x[1], x[0]))
 
 # write output files
 
