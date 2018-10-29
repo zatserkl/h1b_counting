@@ -73,20 +73,26 @@ for line in lines_gen:
         dict_occupation[occupation] += 1
         dict_worksite_state[worksite_state] += 1
 
-print(dict_occupation)
-print(dict_worksite_state)
+# print(dict_occupation)
+# print(dict_worksite_state)
 
 # total certified applications
 total_certified = sum(dict_occupation.values())
 
 # what if the 10th place has more than 1 candidates?
+# occupation_pairs = sorted(dict_occupation.items(),
+#                           key=lambda x: x[1], reverse=True)
 occupation_pairs = sorted(dict_occupation.items(),
-                          key=lambda x: x[1], reverse=True)
+                          key=lambda x: (-x[1], x[0]))
+### occupation_pairs.sort(key=lambda x: x[0])
 
 print('occupation_pairs:\n', occupation_pairs)
 
+# state_pairs = sorted(dict_worksite_state.items(),
+#                      key=lambda x: x[1], reverse=True)
 state_pairs = sorted(dict_worksite_state.items(),
-                     key=lambda x: x[1], reverse=True)
+                     key=lambda x: (-x[1], x[0]))
+### state_pairs.sort(key=lambda x: x[0])
 
 # write output files
 
