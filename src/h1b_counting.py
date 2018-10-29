@@ -97,9 +97,9 @@ with open(fname_occupations, 'w') as ofile_occupations:
     for occupation, number in occupation_pairs:
         if n_top < 10:
             n_top += 1
-            print('{0};{1};{2:.1f}'.format(
+            print('{0};{1};{2:.1f}%'.format(
                 occupation, number, 100 * number / total_certified))
-            ofile_occupations.write('{0};{1};{2:.1f}\n'.format(
+            ofile_occupations.write('{0};{1};{2:.1f}%\n'.format(
                 occupation, number, 100 * number / total_certified))
 
 with open(fname_states, 'w') as ofile_states:
@@ -108,7 +108,7 @@ with open(fname_states, 'w') as ofile_states:
     for state, number in state_pairs:
         if n_top < 10:
             n_top += 1
-            print('{0};{1};{2:.1f}'.format(
+            print('{0};{1};{2:.1f}%'.format(
                 state, number, 100 * number / total_certified))
-            ofile_states.write('{0};{1};{2:.1f}\n'.format(
+            ofile_states.write('{0};{1};{2:.1f}%\n'.format(
                 state, number, 100 * number / total_certified))
