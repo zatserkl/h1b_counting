@@ -1,7 +1,7 @@
 # Table of Contents
 1. [Problem](README.md#problem)
 2. [Input Dataset](README.md#input-dataset-analysis)
-3. [Method](README.md#method)
+3. [Heuristic Method](README.md#heuristic-method)
 3. [Tests](README.md#tests)
 
 # Problem
@@ -20,7 +20,7 @@ The original task description has a remark:
 
 The name of some field in 2014 dataset are different from the 2017 one. It is reasonable to assume that the fields also can be changed in the coming years. I developed special method to deal with this problem.
 
-## Method
+## Heuristic Method
 
 Basically I need to identify header indices for just three fields: visa status, occupation, and state.
 Occupational name associated with the the Standard Occupational Classification (SOC) System.
