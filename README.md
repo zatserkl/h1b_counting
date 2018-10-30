@@ -22,10 +22,9 @@ The name of some field in 2014 dataset are different from the 2017 one. It is re
 
 # Heuristic Method
 
-Basically I need to identify header indices for just three fields: visa status, occupation, and state.
-Occupational name associated with the the Standard Occupational Classification (SOC) System.
+Basically we need to identify header indices for just three fields: visa status, occupation, and state.
 
-The main problem with parsing the data is that the header keys have been changed from year to year. For example keys for visa status are different for 2017 and e.g. 2014. The similar problems are for some other keys.
+The main problem with parsing the data is that the content and header keys have been changed from year to year. For example keys for visa status are different for 2017 and e.g. 2014. The similar problems are for some other keys.
 
 That become especially important for coming data for 2019 year (we need to take a look at the future!).
 To overcome this problem I applied heuristic approach.
