@@ -30,4 +30,4 @@ There are two state fields in the 2014 specification:
 __`LCA_CASE_WORKLOC1_STATE`__: Address information of the intended are in which the foreign worker is expected to be employed (location of the job opening)
 __`LCA_CASE_WORKLOC2_STATE`__: Address information of the second location in which the foreign worker is expected to be employed (location of the job opening).
 
-Compare them we see that the __`LCA_CASE_WORKLOC1_STATE`__ directly corresponds to 2018's __`WORKSITE_STATE`__.
+Compare them we see that the __`LCA_CASE_WORKLOC1_STATE`__ directly corresponds to 2018's __WORKSITE_STATE__.
