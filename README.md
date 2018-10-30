@@ -20,7 +20,7 @@ The original task description has a remark:
 
 The name of some field in 2014 dataset are different from the 2017 one. It is reasonable to assume that the fields also can be changed in the coming years. I developed special method to deal with this problem.
 
-## Heuristic Method
+# Heuristic Method
 
 Basically I need to identify header indices for just three fields: visa status, occupation, and state.
 Occupational name associated with the the Standard Occupational Classification (SOC) System.
@@ -38,6 +38,6 @@ To speedup the heuristic process I tried some header keys that work for some yea
 
 To carry out heuristic analysis, I read a chunk of lines, typically 1000 lines. For regular processing I read the data over again.
 
-## Tests
+# Tests
 
 I added test with 2014 data.
