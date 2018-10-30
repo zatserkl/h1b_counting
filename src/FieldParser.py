@@ -3,12 +3,11 @@ import states
 
 
 class FieldParser:
-    """Finds in the header indices of fields of interest
+    """Finds in the header indices of fields of interest using heuristics
     """
     def __init__(self, header, lines):
-        self.lines = lines
-        # assume that the first line is a header
         self.header = header
+        self.lines = lines
 
         # set the name for the line number for convenience
         self.header[0] = 'LINE'
@@ -19,11 +18,8 @@ class FieldParser:
         self.state = None
 
     def find_field_certified(self):
-        # # create a dictionary: index of list element vs field name
-        # index_field = {}
-        # for ind, field in enumerate(self.header):
-        #     index_field[field] = ind
-
+        """Searches for index of field for visa status
+        """
         certified_dict = defaultdict(int)
         for line in self.lines:
             for ifield, field in enumerate(line):
@@ -32,8 +28,6 @@ class FieldParser:
 
         certified_list = sorted(certified_dict.items(),
                                 key=lambda x: x[1], reverse=True)
-        # print('certified_list:', certified_list,
-        #       'certified_list[0][0] =', certified_list[0][0])
         self.certified = certified_list[0][0]
 
     def find_field_occupation(self):
@@ -61,14 +55,11 @@ class FieldParser:
         ]
 
         for ifield, field in enumerate(self.header):
-            # print(ifield, '\t', field)
             if field.upper() in occupation_header:
                 self.occupation = ifield
-                print('occupation:', self.occupation)
                 return
 
         # if we are here, we did not find the field in header
-        # print('\nfind_field_occupation: look for popular occupations')
 
         # make sure that we know index of CERTIFIED field
         if self.certified is None:
@@ -80,13 +71,10 @@ class FieldParser:
                 continue
             for ifield, field in enumerate(line):
                 if field.replace('"', '').upper() in occupations:  # strip '"'
-                    # print('-->', field)
                     occupation_dict[ifield] += 1
 
         occupation_list = sorted(occupation_dict.items(),
                                  key=lambda x: x[1], reverse=True)
-        # print('occupation_list:', occupation_list,
-        #       'occupation_list[0][0] =', occupation_list[0][0])
         self.occupation = occupation_list[0][0]
 
     def find_field_state(self):
@@ -94,11 +82,6 @@ class FieldParser:
         -- there are two states for 2014's, but we need the first one
         -- to skip attorney's state require the state in each line
         """
-        # # create a dictionary: index of list element vs field name
-        # index_field = {}
-        # for ind, field in enumerate(self.header):
-        #     index_field[field] = ind
-
         state_dict = defaultdict(int)
         for line in self.lines:
             if line[self.certified].upper() != 'CERTIFIED':
@@ -111,6 +94,4 @@ class FieldParser:
                             key=lambda x: x[1], reverse=True)
 
         # look for the second element
-        # print('state_list:', state_list,
-        #       'state_list[0][0] =', state_list[1][0])
         self.state = state_list[1][0]
