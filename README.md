@@ -2,6 +2,7 @@
 1. [Problem](README.md#problem)
 2. [Input Dataset](README.md#input-dataset-analysis)
 3. [Method](README.md#method)
+3. [Tests](README.md#tests)
 
 # Problem
 
@@ -24,18 +25,17 @@ The name of some field in 2014 dataset are different from the 2017 one. It is re
 I need to identify just two fields: occupation and state.
 Occupational name associated with the the Standard Occupational Classification (SOC) System.
 
-2014 specification.
-__`STATUS`__:	Status associated with the last significant event or decision. Valid values include “Certified,” “Certified-Withdrawn,” Denied,” and “Withdrawn”.
-Note that in fact all the fields are in upper case, e.g. "CERTIFIED" for "Certified".
+The main problem with parsing the data is that the header keys have been changed from year to year. For example keys for visa status are different for 2017 and e.g. 2014. The similar problems are for some other keys.
 
-From 2018 specification:
-__`WORKSITE_STATE`__: State information of the foreign worker's intended area of employment.
-There are two state fields in the 2014 specification:
-__`LCA_CASE_WORKLOC1_STATE`__: Address information of the intended are in which the foreign worker is expected to be employed (location of the job opening)
-__`LCA_CASE_WORKLOC2_STATE`__: Address information of the second location in which the foreign worker is expected to be employed (location of the job opening).
+That become especially important for coming data for 2019 year.
+To overcome this problem I applied heuristic approach.
 
-Compare them we see that the __`LCA_CASE_WORKLOC1_STATE`__ directly corresponds to 2018's __`WORKSITE_STATE`__.
+To find the occupation I search for some popular occupations. A quick look on the data shows that the occupation description were not changed much.
 
-Fields for 2008.
-__`State_1`__:	Work state (location of the job opening).
-__`Approval_Status`__:	Approval status - certified or denied.
+A search for the state is a bit complicated because for some years (e.g. 2014) there are two states mentioned as intended and the second state. Out of them the first (intended) state comes the most close to the meaning for the other years. This state comes as the second state field (the first is an employer state). For some years there is also a state for the attorney, but is can be sorted out because attorney was not used in all records. To search for the state I use a list of all U.S. states and territories.
+
+To carry out heuristic analysis, I read a chunk of lines, typically 1000 lines. For regular processing I read the data over again.
+
+## Tests
+
+I added test with 2014 data.
