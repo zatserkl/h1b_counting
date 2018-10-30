@@ -37,18 +37,37 @@ header = next(lines_gen)
 # set the name for the line number for convenience
 header[0] = 'LINE'
 
+# string constants: fields of interest
+
+case_status_key = 'CASE_STATUS'
+case_status_old_key = 'STATUS'          # for 2014 dataset
+case_status_certified = 'CERTIFIED'
+occupation_key = 'SOC_NAME'
+occupation_old_key = 'LCA_CASE_SOC_NAME'
+worksite_state_key = 'WORKSITE_STATE'
+worksite_state_old_1_key = 'LCA_CASE_WORKLOC1_STATE'  # equiv. WORKSITE_STATE
+worksite_state_old_2_key = 'LCA_CASE_WORKLOC2_STATE'
+
+# test header for keywords
+
+# 2014 dataset uses STATUS instead of CASE_STATUS
+if case_status_key not in header:
+    case_status_key = case_status_old_key
+
+# 2014 dataset uses LCA_CASE_SOC_NAME instead of SOC_NAME
+if occupation_key not in header:
+    occupation_key = occupation_old_key
+
+# 2014 dataset uses LCA_CASE_WORKLOC1_STATE instead of WORKSITE_STATE
+if worksite_state_key not in header:
+    worksite_state_key = worksite_state_old_1_key
+
 # create a dictionary: index of list element vs field name
 index_field = {}
 for ind, field in enumerate(header):
     index_field[field] = ind
 
 # print(index_field)  # can be different for different years
-
-# string constants: fields of interest
-case_status_key = 'CASE_STATUS'
-case_status_certified = 'CERTIFIED'
-occupation_key = 'SOC_NAME'
-worksite_state_key = 'WORKSITE_STATE'
 
 # output dictionaries
 dict_job_title = defaultdict(int)
@@ -86,7 +105,7 @@ occupation_pairs = sorted(dict_occupation.items(),
 # then sort by the number: the name sorting is stable
 occupation_pairs.sort(key=lambda x: x[1], reverse=True)
 
-# Sort in one pass. The minus sign produce reverse order.
+# Sort in one line. The minus sign produce reverse order.
 # occupation_pairs = sorted(dict_occupation.items(),
 #                           key=lambda x: (-x[1], x[0]))
 
@@ -98,7 +117,7 @@ state_pairs = sorted(dict_worksite_state.items(),
 # then sort by the number: the name sorting is stable
 state_pairs.sort(key=lambda x: x[1], reverse=True)
 
-# Sort in one pass. The minus sign produce reverse order.
+# Sort in one line. The minus sign produce reverse order.
 # state_pairs = sorted(dict_worksite_state.items(),
 #                      key=lambda x: (-x[1], x[0]))
 
