@@ -22,17 +22,19 @@ The name of some field in 2014 dataset are different from the 2017 one. It is re
 
 ## Method
 
-I need to identify just two fields: occupation and state.
+Basically I need to identify header indices for just three fields: visa status, occupation, and state.
 Occupational name associated with the the Standard Occupational Classification (SOC) System.
 
 The main problem with parsing the data is that the header keys have been changed from year to year. For example keys for visa status are different for 2017 and e.g. 2014. The similar problems are for some other keys.
 
-That become especially important for coming data for 2019 year.
+That become especially important for coming data for 2019 year (we need to take a look at the future!).
 To overcome this problem I applied heuristic approach.
 
 To find the occupation I search for some popular occupations. A quick look on the data shows that the occupation description were not changed much.
 
-A search for the state is a bit complicated because for some years (e.g. 2014) there are two states mentioned as intended and the second state. Out of them the first (intended) state comes the most close to the meaning for the other years. This state comes as the second state field (the first is an employer state). For some years there is also a state for the attorney, but is can be sorted out because attorney was not used in all records. To search for the state I use a list of all U.S. states and territories.
+A search for the state is a bit complicated because for some years (e.g. 2014) there are two states mentioned: an intended and the second state. Out of them the first (intended) state comes the most close to the meaning for the other years. This state comes as the second state field (the first is an employer state). For some years there is also a state for the attorney, but is can be sorted out because attorney was not used in all records. To search for the state I use a list of all U.S. states and territories.
+
+To speedup the heuristic process I tried some header keys that work for some years. Of course, we cannot predict the keys for the 2019.
 
 To carry out heuristic analysis, I read a chunk of lines, typically 1000 lines. For regular processing I read the data over again.
 
