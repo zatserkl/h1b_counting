@@ -1,3 +1,5 @@
+# http://code.activestate.com/recipes/577305-python-dictionary-of-us-states-and-territories/
+
 states = {
         'AK': 'Alaska',
         'AL': 'Alabama',

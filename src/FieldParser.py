@@ -1,3 +1,5 @@
+# Andriy Zatserklyaniy <zatserkl@gmail.com> Oct 30, 2018
+
 from collections import defaultdict
 import states
 

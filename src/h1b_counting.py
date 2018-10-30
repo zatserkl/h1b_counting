@@ -1,3 +1,5 @@
+# Andriy Zatserklyaniy <zatserkl@gmail.com> Oct 30, 2018
+
 from FieldParser import FieldParser
 from collections import defaultdict
 import sys
