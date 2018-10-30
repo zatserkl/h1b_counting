@@ -8,9 +8,12 @@ def input_line(fname_input):
     Input:  input filename
     Output: list of fields
     """
-    with open(fname_input) as ifile:
-        for line in ifile:
-            yield line.strip().split(';')
+    try:
+        with open(fname_input) as ifile:
+            for line in ifile:
+                yield line.upper().strip().split(';')
+    except FileNotFoundError:
+        raise FileNotFoundError
 
 
 if __name__ == '__main__':
@@ -27,9 +30,16 @@ if __name__ == '__main__':
     #       'fname_occupations:', fname_occupations,
     #       'fname_states:', fname_states)
 
+    # read a chunk of lines for heuristic parse to find fields of interest
+
     lines_gen = input_line(fname_input)
 
-    header = next(lines_gen)
+    try:
+        header = next(lines_gen)
+    except FileNotFoundError:
+        print('File not found:', fname_input)
+        exit()
+
     n_lines_parse = 1000        # the number of lines for heuristic parse
     lines = []
     for iline in range(n_lines_parse):
@@ -51,10 +61,12 @@ if __name__ == '__main__':
     print('field_parser.occupation =', field_parser.occupation)
     print('field_parser.state =', field_parser.state)
 
+    # process the file from the beginning
+
     try:
         lines_gen = input_line(fname_input)  # creates a line generator
     except FileNotFoundError as e:
-        print(e)
+        print('Exception the second time')
         exit()
 
     header = next(lines_gen)
@@ -62,37 +74,8 @@ if __name__ == '__main__':
     # set the name for the line number for convenience
     header[0] = 'LINE'
 
-    # string constants: fields of interest
-
-    case_status_key = 'CASE_STATUS'
-    case_status_old_key = 'STATUS'          # for 2014 dataset
+    # string constants
     case_status_certified = 'CERTIFIED'
-    occupation_key = 'SOC_NAME'
-    occupation_old_key = 'LCA_CASE_SOC_NAME'
-    worksite_state_key = 'WORKSITE_STATE'
-    worksite_state_old_1_key = 'LCA_CASE_WORKLOC1_STATE'  # eq. WORKSITE_STATE
-    worksite_state_old_2_key = 'LCA_CASE_WORKLOC2_STATE'
-
-    # test header for keywords
-
-    # 2014 dataset uses STATUS instead of CASE_STATUS
-    if case_status_key not in header:
-        case_status_key = case_status_old_key
-
-    # 2014 dataset uses LCA_CASE_SOC_NAME instead of SOC_NAME
-    if occupation_key not in header:
-        occupation_key = occupation_old_key
-
-    # 2014 dataset uses LCA_CASE_WORKLOC1_STATE instead of WORKSITE_STATE
-    if worksite_state_key not in header:
-        worksite_state_key = worksite_state_old_1_key
-
-    # create a dictionary: index of list element vs field name
-    index_field = {}
-    for ind, field in enumerate(header):
-        index_field[field] = ind
-
-    print(index_field)  # can be different for different years
 
     # output dictionaries
     dict_job_title = defaultdict(int)
@@ -106,9 +89,9 @@ if __name__ == '__main__':
         #     for i in range(len(line)):
         #         print('{0:30s} {1}'.format(header[i], line[i]))
 
-        case_status = line[index_field[case_status_key]]
-        occupation = line[index_field[occupation_key]].replace('"', '')
-        worksite_state = line[index_field[worksite_state_key]]
+        case_status = line[field_parser.certified]
+        occupation = line[field_parser.occupation].replace('"', '')
+        worksite_state = line[field_parser.state]
 
         # print(case_status_key, case_status)
         # print(occupation_key, occupation)
