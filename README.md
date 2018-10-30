@@ -18,7 +18,7 @@ The original task description has a remark:
 
 **Note:** Each year of data can have different columns. Check **File Structure** docs before development.
 
-The name of some field in 2014 dataset are different from the 2017 one. It is reasonable to assume that the fields also can be changed in the coming years. I developed special method to deal with this problem.
+The name of some field in 2014 dataset are different from the 2017 one. It is reasonable to assume that the fields also can be changed in the coming years. I developed heuristic method to deal with this problem.
 
 # Heuristic Method
 
